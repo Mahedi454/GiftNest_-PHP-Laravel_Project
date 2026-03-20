@@ -7,7 +7,10 @@ storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
 .env
-.env.*
+.env.local
+.env.production
+.env.development
+.env.test
 Dockerfile
 docker-compose.yml
 compose.yml
