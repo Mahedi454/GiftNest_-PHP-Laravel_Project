@@ -31,8 +31,23 @@ RUN mkdir -p database storage/framework/cache storage/framework/sessions storage
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache database \
     && cp .env.example .env \
-    && sed -ri "s#^DocumentRoot /var/www/html#DocumentRoot /var/www/html/public#g" /etc/apache2/sites-available/000-default.conf \
-    && sed -ri "s#<Directory /var/www/>#<Directory /var/www/html/public/>#g" /etc/apache2/apache2.conf
+    && printf '%s\n' \
+       '<VirtualHost *:80>' \
+       '    ServerName localhost' \
+       '    DocumentRoot /var/www/html/public' \
+       '' \
+       '    <Directory /var/www/html/public>' \
+       '        AllowOverride All' \
+       '        Require all granted' \
+       '        Options Indexes FollowSymLinks' \
+       '    </Directory>' \
+       '' \
+       '    ErrorLog ${APACHE_LOG_DIR}/error.log' \
+       '    CustomLog ${APACHE_LOG_DIR}/access.log combined' \
+       '</VirtualHost>' \
+       > /etc/apache2/sites-available/000-default.conf \
+    && printf '%s\n' 'ServerName localhost' > /etc/apache2/conf-available/servername.conf \
+    && a2enconf servername
 
 ENV APP_ENV=production \
     APP_DEBUG=false \
