@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'GiftNest · Cart')
+@section('title', 'GiftNest - Cart')
 
 @section('content')
   <section class="section section--tight">
     <div class="section__head">
       <h1>Cart</h1>
-      <div class="muted">Cart uses localStorage for the UI scaffold.</div>
+      <div class="muted">Review your selected gifts before moving to checkout.</div>
     </div>
   </section>
 
@@ -28,16 +28,15 @@
         </div>
         <div class="cart__summaryRow">
           <span class="muted">Shipping</span>
-          <span>৳ 60</span>
+          <span data-cart-shipping>৳ 0</span>
         </div>
         <div class="divider"></div>
         <div class="cart__summaryRow cart__summaryRow--total">
           <span>Total</span>
-          <span data-cart-total>৳ 60</span>
+          <span data-cart-total>৳ 0</span>
         </div>
         <a class="btn btn--full" href="{{ route('checkout') }}">Checkout</a>
       </aside>
     </div>
   </section>
 @endsection
-

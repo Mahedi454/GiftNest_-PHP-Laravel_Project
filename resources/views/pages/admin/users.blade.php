@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin · Users')
+@section('title', 'Admin - Users')
 
 @section('content')
   <section class="section">
     <div class="section__head">
       <h1>Users</h1>
-      <div class="muted">Roles: user/admin (wire to database later).</div>
+      <div class="muted">Manage customer accounts and access roles from one place.</div>
     </div>
 
     <div class="card table">
@@ -29,4 +29,3 @@
     </div>
   </section>
 @endsection
-

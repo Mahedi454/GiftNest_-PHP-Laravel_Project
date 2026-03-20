@@ -2,12 +2,15 @@
   <div class="container footer__inner">
     <div class="footer__left">
       <div class="footer__brand">
-        <span class="brand__mark">GN</span>
+        <img class="brand__logo" src="{{ asset('gift-svgrepo-com.svg') }}" alt="GiftNest logo" />
         <div>
           <div class="footer__title">GiftNest</div>
-          <div class="footer__subtitle">Gifts for students & local shoppers in Bangladesh</div>
+          <div class="footer__subtitle">Thoughtful gifts for students, friends, and local shoppers across Bangladesh.</div>
         </div>
       </div>
+      <p class="footer__copy">
+        Designed for quick discovery, friendly checkout, and moments that still feel personal.
+      </p>
       <div class="footer__meta">
         <span class="chip">Cash on Delivery</span>
         <span class="chip">bKash-ready</span>
@@ -37,8 +40,7 @@
   </div>
 
   <div class="container footer__bottom">
-    <span>© {{ date('Y') }} GiftNest. All rights reserved.</span>
-    <span class="footer__small">Made with Laravel + Blade</span>
+    <span>&copy; {{ date('Y') }} GiftNest. All rights reserved.</span>
+    <span class="footer__small">Built for a smoother gifting experience.</span>
   </div>
 </footer>
-

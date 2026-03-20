@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -10,9 +11,9 @@ use Illuminate\Support\Facades\Route;
 | Later, replace closures with controllers and add auth/middleware.
 */
 
-Route::view('/', 'pages.home')->name('home');
-Route::view('/shop', 'pages.shop')->name('shop');
-Route::view('/product/{id}', 'pages.product')->name('product.show');
+Route::get('/', [ProductController::class, 'home'])->name('home');
+Route::get('/shop', [ProductController::class, 'index'])->name('shop');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 Route::view('/cart', 'pages.cart')->name('cart');
 Route::view('/checkout', 'pages.checkout')->name('checkout');
 Route::view('/about', 'pages.about')->name('about');

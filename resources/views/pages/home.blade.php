@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'GiftNest · Home')
+@section('title', 'GiftNest - Thoughtful Gifts for Every Occasion')
 
 @section('content')
   <section class="hero">
     <div class="hero__grid">
       <div class="hero__copy">
-        <div class="kicker">Apple-clean · Glassmorphism · Bangladesh-ready</div>
-        <h1>Find the perfect gift—fast.</h1>
+        <div class="hero__eyebrow">
+          <span class="kicker">Modern gifting for Bangladesh</span>
+          <span class="chip chip--strong">Same-day friendly</span>
+        </div>
+        <h1>Find the right gift with ease.</h1>
         <p class="lead">
-          Curated gifts for students and local shoppers. Simple checkout, smooth UI, and ready for bKash/SSLCommerz integration.
+          Discover curated picks for birthdays, campus surprises, and everyday celebrations with a smoother shopping experience from first click to checkout.
         </p>
         <div class="hero__cta">
           <a class="btn" href="{{ route('shop') }}">Shop now</a>
@@ -17,16 +20,16 @@
         </div>
         <div class="hero__stats">
           <div class="stat">
-            <div class="stat__value">Fast</div>
-            <div class="stat__label">Shopping flow</div>
+            <div class="stat__value">{{ count($featuredProducts) + count($heroProducts) }}+</div>
+            <div class="stat__label">Featured gift picks</div>
           </div>
           <div class="stat">
-            <div class="stat__value">Clean</div>
-            <div class="stat__label">Modern UI</div>
+            <div class="stat__value">6</div>
+            <div class="stat__label">Gift categories</div>
           </div>
           <div class="stat">
-            <div class="stat__value">Ready</div>
-            <div class="stat__label">Payments (BD)</div>
+            <div class="stat__value">24h</div>
+            <div class="stat__label">Fast local dispatch</div>
           </div>
         </div>
       </div>
@@ -35,15 +38,22 @@
         <div class="card hero-card">
           <div class="hero-card__top">
             <div>
-              <div class="hero-card__title">Today’s Picks</div>
-              <div class="hero-card__subtitle">Popular with students</div>
+              <div class="hero-card__title">Today's Picks</div>
+              <div class="hero-card__subtitle">Selected from your new gift catalog</div>
             </div>
-            <span class="chip">New</span>
+            <span class="chip chip--strong">Trending</span>
+          </div>
+          <div class="hero-card__feature">
+            <div>
+              <div class="hero-card__featureLabel">This week</div>
+              <div class="hero-card__featureValue">Flowers, jewelry, chocolates, and curated hampers</div>
+            </div>
+            <a class="link" href="{{ route('shop') }}">Explore collection</a>
           </div>
           <div class="grid grid--3">
-            @include('components.product-card', ['id' => 1, 'name' => 'Mini Teddy', 'price' => 399, 'badge' => 'Cute'])
-            @include('components.product-card', ['id' => 2, 'name' => 'Chocolate Box', 'price' => 549, 'badge' => 'Sweet'])
-            @include('components.product-card', ['id' => 3, 'name' => 'Notebook Set', 'price' => 299, 'badge' => 'Study'])
+            @foreach ($heroProducts as $product)
+              @include('components.product-card', $product)
+            @endforeach
           </div>
         </div>
       </div>
@@ -52,15 +62,36 @@
 
   <section class="section">
     <div class="section__head">
-      <h2>Featured products</h2>
+      <div>
+        <div class="kicker">Featured collection</div>
+        <h2>Thoughtful picks that look good and ship beautifully</h2>
+      </div>
       <a class="link" href="{{ route('shop') }}">View all</a>
     </div>
     <div class="grid grid--4">
-      @include('components.product-card', ['id' => 4, 'name' => 'Keychain Pack', 'price' => 199, 'badge' => 'Budget'])
-      @include('components.product-card', ['id' => 5, 'name' => 'Mug (Minimal)', 'price' => 499, 'badge' => 'Daily'])
-      @include('components.product-card', ['id' => 6, 'name' => 'Perfume (Mini)', 'price' => 699, 'badge' => 'Gift'])
-      @include('components.product-card', ['id' => 7, 'name' => 'Photo Frame', 'price' => 599, 'badge' => 'Memory'])
+      @foreach ($featuredProducts as $product)
+        @include('components.product-card', $product)
+      @endforeach
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid grid--3">
+      <article class="card feature-panel">
+        <div class="feature-panel__icon">01</div>
+        <h3>Real shop-ready catalog</h3>
+        <p>Your storefront now has named products, categories, and image slots prepared for the uploaded collection.</p>
+      </article>
+      <article class="card feature-panel">
+        <div class="feature-panel__icon">02</div>
+        <h3>Consistent framed images</h3>
+        <p>Every product card now uses a cleaner image frame so mixed image sizes still look neat inside the grid.</p>
+      </article>
+      <article class="card feature-panel">
+        <div class="feature-panel__icon">03</div>
+        <h3>Flexible for expansion</h3>
+        <p>The shared product catalog keeps the storefront organized and makes collection updates easy to manage.</p>
+      </article>
     </div>
   </section>
 @endsection
-

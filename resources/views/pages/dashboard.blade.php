@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'GiftNest · Dashboard')
+@section('title', 'GiftNest - Dashboard')
 
 @section('content')
   <section class="section">
     <div class="section__head">
       <h1>Dashboard</h1>
-      <div class="muted">User dashboard UI scaffold.</div>
+      <div class="muted">Manage your orders, saved items, and account activity from one place.</div>
     </div>
 
     <div class="grid grid--2">
@@ -21,9 +21,8 @@
 
       <div class="card">
         <div class="card__title">Account</div>
-        <div class="muted">Name/email + profile settings will appear here after authentication.</div>
+        <div class="muted">Keep your account details, delivery preferences, and gifting activity organized here.</div>
       </div>
     </div>
   </section>
 @endsection
-

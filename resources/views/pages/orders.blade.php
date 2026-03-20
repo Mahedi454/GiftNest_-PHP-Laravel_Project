@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'GiftNest · Orders')
+@section('title', 'GiftNest - Orders')
 
 @section('content')
   <section class="section">
     <div class="section__head">
       <h1>Orders</h1>
-      <div class="muted">Order history + statuses (pending/shipped/delivered).</div>
+      <div class="muted">Track your recent purchases and stay updated on delivery progress.</div>
     </div>
 
     <div class="card table">
@@ -29,4 +29,3 @@
     </div>
   </section>
 @endsection
-
