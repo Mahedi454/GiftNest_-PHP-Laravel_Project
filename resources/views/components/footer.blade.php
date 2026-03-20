@@ -2,7 +2,7 @@
   <div class="container footer__inner">
     <div class="footer__left">
       <div class="footer__brand">
-        <img class="brand__logo" src="{{ asset('gift-svgrepo-com.svg') }}" alt="GiftNest logo" />
+        <img class="brand__logo" src="/gift-svgrepo-com.svg" alt="GiftNest logo" />
         <div>
           <div class="footer__title">GiftNest</div>
           <div class="footer__subtitle">Thoughtful gifts for students, friends, and local shoppers across Bangladesh.</div>

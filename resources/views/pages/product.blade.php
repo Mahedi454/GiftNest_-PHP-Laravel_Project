@@ -9,7 +9,7 @@
         <div class="product__mediaFrame">
           @php
             $imagePath = public_path('images/products/' . $product['image']);
-            $imageUrl = file_exists($imagePath) ? asset('images/products/' . $product['image']) : '';
+            $imageUrl = file_exists($imagePath) ? '/images/products/' . $product['image'] : '';
           @endphp
           @if ($imageUrl)
             <img src="{{ $imageUrl }}" alt="{{ $product['name'] }}" class="product__mediaImage" />

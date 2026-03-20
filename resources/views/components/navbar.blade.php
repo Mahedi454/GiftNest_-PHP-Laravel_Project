@@ -1,7 +1,7 @@
 <header class="navbar">
   <div class="container navbar__inner">
     <a class="brand" href="{{ route('home') }}">
-      <img class="brand__logo" src="{{ asset('gift-svgrepo-com.svg') }}" alt="GiftNest logo" />
+      <img class="brand__logo" src="/gift-svgrepo-com.svg" alt="GiftNest logo" />
       <span class="brand__name">GiftNest</span>
     </a>
 
@@ -22,7 +22,7 @@
       <a class="btn btn--ghost" href="{{ route('login') }}">Login</a>
       <a class="btn" href="{{ route('register') }}">Sign up</a>
       <button class="hamburger" type="button" aria-label="Open menu" data-mobile-menu-toggle>
-        <img class="hamburger__icon" src="{{ asset('line-3-svgrepo-com.svg') }}" alt="" aria-hidden="true" />
+        <img class="hamburger__icon" src="/line-3-svgrepo-com.svg" alt="" aria-hidden="true" />
       </button>
     </div>
   </div>

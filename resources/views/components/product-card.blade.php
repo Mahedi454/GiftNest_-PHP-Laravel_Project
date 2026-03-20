@@ -10,7 +10,7 @@
 @php
   $imagePath = $image ? public_path('images/products/' . $image) : null;
   $hasImage = $imagePath && file_exists($imagePath);
-  $imageUrl = $hasImage ? asset('images/products/' . $image) : '';
+  $imageUrl = $hasImage ? '/images/products/' . $image : '';
 @endphp
 
 <article class="card product-card">

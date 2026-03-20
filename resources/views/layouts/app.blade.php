@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b1220" />
     <title>@yield('title', 'GiftNest - Thoughtful Gifts for Every Occasion')</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('gift-svgrepo-com.svg') }}" />
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/svg+xml" href="/gift-svgrepo-com.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/components.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
   </head>
   <body>
     <div class="site-shell">
@@ -29,8 +29,8 @@
       @include('components.footer')
     </div>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/cart.js') }}" defer></script>
-    <script src="{{ asset('js/wishlist.js') }}" defer></script>
+    <script src="/js/app.js" defer></script>
+    <script src="/js/cart.js" defer></script>
+    <script src="/js/wishlist.js" defer></script>
   </body>
 </html>
