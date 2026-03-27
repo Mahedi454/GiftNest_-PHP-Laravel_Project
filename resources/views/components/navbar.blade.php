@@ -19,8 +19,22 @@
         <span class="iconbtn__icon" aria-hidden="true">&#128722;</span>
         <span class="badge" data-cart-count>0</span>
       </a>
-      <a class="btn btn--ghost" href="{{ route('login') }}">Login</a>
-      <a class="btn" href="{{ route('register') }}">Sign up</a>
+
+      @auth
+        @if (auth()->user()->isAdmin())
+          <a class="btn btn--ghost" href="{{ route('admin.index') }}">Admin</a>
+        @else
+          <a class="btn btn--ghost" href="{{ route('dashboard') }}">Dashboard</a>
+        @endif
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button class="btn" type="submit">Logout</button>
+        </form>
+      @else
+        <a class="btn btn--ghost" href="{{ route('login') }}">Login</a>
+        <a class="btn" href="{{ route('register') }}">Sign up</a>
+      @endauth
+
       <button class="hamburger" type="button" aria-label="Open menu" data-mobile-menu-toggle>
         <img class="hamburger__icon" src="/line-3-svgrepo-com.svg" alt="" aria-hidden="true" />
       </button>
@@ -34,8 +48,20 @@
       <a href="{{ route('about') }}">About</a>
       <a href="{{ route('contact') }}">Contact</a>
       <div class="mobilemenu__row">
-        <a class="btn btn--ghost" href="{{ route('login') }}">Login</a>
-        <a class="btn" href="{{ route('register') }}">Sign up</a>
+        @auth
+          @if (auth()->user()->isAdmin())
+            <a class="btn btn--ghost" href="{{ route('admin.index') }}">Admin</a>
+          @else
+            <a class="btn btn--ghost" href="{{ route('dashboard') }}">Dashboard</a>
+          @endif
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button class="btn" type="submit">Logout</button>
+          </form>
+        @else
+          <a class="btn btn--ghost" href="{{ route('login') }}">Login</a>
+          <a class="btn" href="{{ route('register') }}">Sign up</a>
+        @endauth
       </div>
     </div>
   </div>

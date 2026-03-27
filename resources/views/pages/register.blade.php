@@ -7,41 +7,47 @@
     <div class="auth__shell">
       <div class="auth__intro">
         <div class="kicker">Create account</div>
-        <h1>Start shopping with a cleaner account setup</h1>
-        <p class="lead">
-          Create your GiftNest account to save favorites, move through checkout faster, and keep delivery details ready.
-        </p>
+        <h1>Register your GiftNest account</h1>
+        <p class="lead">Customers can sign up and shop immediately. Admin roles are managed securely from the admin panel.</p>
         <div class="auth__highlights">
-          <span class="chip">Faster checkout</span>
-          <span class="chip">Saved favorites</span>
-          <span class="chip">Order history</span>
+          <span class="chip">Secure passwords</span>
+          <span class="chip">Customer dashboard</span>
+          <span class="chip">Order-ready account</span>
         </div>
       </div>
 
       <div class="auth__card card">
         <div class="auth__cardHead">
-          <h2>Create your account</h2>
-          <p class="muted">A few details now for a faster gifting experience.</p>
+          <h2>Create account</h2>
+          <p class="muted">Enter your details to register.</p>
         </div>
 
-        <form class="auth__form">
+        <form class="auth__form" method="POST" action="{{ route('register.store') }}">
+          @csrf
           <label class="field">
             <span class="field__label">Name</span>
-            <input class="input" type="text" placeholder="Your name" />
+            <input class="input" type="text" name="name" value="{{ old('name') }}" required />
+            @error('name') <span class="muted">{{ $message }}</span> @enderror
           </label>
           <label class="field">
             <span class="field__label">Email</span>
-            <input class="input" type="email" placeholder="you@example.com" />
+            <input class="input" type="email" name="email" value="{{ old('email') }}" required />
+            @error('email') <span class="muted">{{ $message }}</span> @enderror
           </label>
           <label class="field">
             <span class="field__label">Password</span>
-            <input class="input" type="password" placeholder="Create a password" />
+            <input class="input" type="password" name="password" required />
+            @error('password') <span class="muted">{{ $message }}</span> @enderror
           </label>
-          <button class="btn btn--full" type="button">Create account</button>
+          <label class="field">
+            <span class="field__label">Confirm password</span>
+            <input class="input" type="password" name="password_confirmation" required />
+          </label>
+          <button class="btn btn--full" type="submit">Create account</button>
         </form>
 
         <div class="auth__bottom">
-          <span class="muted">Already have an account?</span>
+          <span class="muted">Already registered?</span>
           <a class="link" href="{{ route('login') }}">Login</a>
         </div>
       </div>

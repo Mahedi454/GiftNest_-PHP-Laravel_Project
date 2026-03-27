@@ -1,44 +1,49 @@
 @extends('layouts.app')
 
-@section('title', 'GiftNest - Login')
+@section('title', 'GiftNest - Admin Login')
 
 @section('content')
   <section class="section auth">
     <div class="auth__shell">
       <div class="auth__intro">
-        <div class="kicker">Account access</div>
-        <h1>Welcome back</h1>
-        <p class="lead">
-          Sign in to manage your orders, wishlist, and saved gift ideas without losing your progress.
-        </p>
+        <div class="kicker">Authentication</div>
+        <h1>Login to GiftNest</h1>
+        <p class="lead">Admins are redirected to the dashboard after login. Customers go to their account area.</p>
         <div class="auth__highlights">
-          <span class="chip">Quick checkout</span>
-          <span class="chip">Wishlist sync</span>
-          <span class="chip">Order updates</span>
+          <span class="chip">Role-based access</span>
+          <span class="chip">Protected admin routes</span>
+          <span class="chip">Session authentication</span>
         </div>
       </div>
 
       <div class="auth__card card">
         <div class="auth__cardHead">
-          <h2>Login to your account</h2>
-          <p class="muted">Use your email and password to continue.</p>
+          <h2>Sign in</h2>
+          <p class="muted">Use your account email and password.</p>
         </div>
 
-        <form class="auth__form">
+        <form class="auth__form" method="POST" action="{{ route('login.store') }}">
+          @csrf
           <label class="field">
             <span class="field__label">Email</span>
-            <input class="input" type="email" placeholder="you@example.com" />
+            <input class="input" type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required />
+            @error('email') <span class="muted">{{ $message }}</span> @enderror
           </label>
           <label class="field">
             <span class="field__label">Password</span>
-            <input class="input" type="password" placeholder="Enter your password" />
+            <input class="input" type="password" name="password" placeholder="Enter your password" required />
+            @error('password') <span class="muted">{{ $message }}</span> @enderror
           </label>
-          <button class="btn btn--full" type="button">Login</button>
+          <label class="field field--inline">
+            <input type="checkbox" name="remember" value="1" />
+            <span class="field__label">Remember me</span>
+          </label>
+          <button class="btn btn--full" type="submit">Login</button>
         </form>
 
         <div class="auth__bottom">
-          <span class="muted">New here?</span>
-          <a class="link" href="{{ route('register') }}">Create an account</a>
+          <span class="muted">Need an account?</span>
+          <a class="link" href="{{ route('register') }}">Create one</a>
         </div>
       </div>
     </div>

@@ -5,27 +5,43 @@
 @section('content')
   <section class="section">
     <div class="section__head">
-      <h1>Users</h1>
-      <div class="muted">Manage customer accounts and access roles from one place.</div>
+      <div>
+        <h1>Manage users</h1>
+        <div class="muted">View registered users and update their roles.</div>
+      </div>
     </div>
+
+    @if (session('status'))
+      <div class="card" style="margin-bottom: 1rem; padding: 1rem;">{{ session('status') }}</div>
+    @endif
 
     <div class="card table">
       <div class="table__row table__head">
         <div>Name</div>
         <div>Email</div>
         <div>Role</div>
+        <div>Created</div>
         <div>Action</div>
       </div>
-      @for ($i = 1; $i <= 6; $i++)
+      @foreach ($users as $user)
         <div class="table__row">
-          <div>User {{ $i }}</div>
-          <div class="muted">user{{ $i }}@mail.com</div>
-          <div><span class="chip">{{ $i === 1 ? 'admin' : 'user' }}</span></div>
-          <div class="table__actions">
-            <button class="btn btn--ghost btn--small" type="button">Edit</button>
+          <div>{{ $user->name }}</div>
+          <div>{{ $user->email }}</div>
+          <div><span class="chip">{{ ucfirst($user->role) }}</span></div>
+          <div>{{ $user->created_at->format('d M Y') }}</div>
+          <div>
+            <form method="POST" action="{{ route('admin.users.role', $user) }}">
+              @csrf
+              @method('PATCH')
+              <select class="input" name="role">
+                <option value="user" @selected($user->role === 'user')>User</option>
+                <option value="admin" @selected($user->role === 'admin')>Admin</option>
+              </select>
+              <button class="btn btn--small" type="submit" style="margin-top: 0.5rem;">Update</button>
+            </form>
           </div>
         </div>
-      @endfor
+      @endforeach
     </div>
   </section>
 @endsection

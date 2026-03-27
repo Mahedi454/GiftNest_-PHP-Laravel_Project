@@ -24,7 +24,7 @@
             <div class="stat__label">Featured gift picks</div>
           </div>
           <div class="stat">
-            <div class="stat__value">6</div>
+            <div class="stat__value">{{ $categoryCount }}</div>
             <div class="stat__label">Gift categories</div>
           </div>
           <div class="stat">
@@ -39,20 +39,20 @@
           <div class="hero-card__top">
             <div>
               <div class="hero-card__title">Today's Picks</div>
-              <div class="hero-card__subtitle">Selected from your new gift catalog</div>
+              <div class="hero-card__subtitle">Selected from your live product catalog</div>
             </div>
             <span class="chip chip--strong">Trending</span>
           </div>
           <div class="hero-card__feature">
             <div>
               <div class="hero-card__featureLabel">This week</div>
-              <div class="hero-card__featureValue">Flowers, jewelry, chocolates, and curated hampers</div>
+              <div class="hero-card__featureValue">Products are now managed from the admin dashboard and loaded from MySQL.</div>
             </div>
             <a class="link" href="{{ route('shop') }}">Explore collection</a>
           </div>
           <div class="grid grid--3">
             @foreach ($heroProducts as $product)
-              @include('components.product-card', $product)
+              @include('components.product-card', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'image' => $product->image, 'category' => $product->category->name])
             @endforeach
           </div>
         </div>
@@ -70,28 +70,8 @@
     </div>
     <div class="grid grid--4">
       @foreach ($featuredProducts as $product)
-        @include('components.product-card', $product)
+        @include('components.product-card', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'image' => $product->image, 'category' => $product->category->name])
       @endforeach
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="grid grid--3">
-      <article class="card feature-panel">
-        <div class="feature-panel__icon">01</div>
-        <h3>Real shop-ready catalog</h3>
-        <p>Your storefront now has named products, categories, and image slots prepared for the uploaded collection.</p>
-      </article>
-      <article class="card feature-panel">
-        <div class="feature-panel__icon">02</div>
-        <h3>Consistent framed images</h3>
-        <p>Every product card now uses a cleaner image frame so mixed image sizes still look neat inside the grid.</p>
-      </article>
-      <article class="card feature-panel">
-        <div class="feature-panel__icon">03</div>
-        <h3>Flexible for expansion</h3>
-        <p>The shared product catalog keeps the storefront organized and makes collection updates easy to manage.</p>
-      </article>
     </div>
   </section>
 @endsection

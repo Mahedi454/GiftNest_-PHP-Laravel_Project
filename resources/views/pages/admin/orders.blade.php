@@ -1,35 +1,53 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin · Orders')
+@section('title', 'Admin - Orders')
 
 @section('content')
   <section class="section">
     <div class="section__head">
-      <h1>Orders</h1>
-      <div class="muted">Update statuses: pending → shipped → delivered.</div>
+      <div>
+        <h1>Manage orders</h1>
+        <div class="muted">View customer purchases and update order status.</div>
+      </div>
     </div>
+
+    @if (session('status'))
+      <div class="card" style="margin-bottom: 1rem; padding: 1rem;">{{ session('status') }}</div>
+    @endif
 
     <div class="card table">
       <div class="table__row table__head">
         <div>Order</div>
-        <div>User</div>
-        <div>Status</div>
+        <div>Customer</div>
+        <div>Items</div>
         <div>Total</div>
+        <div>Status</div>
         <div>Action</div>
       </div>
-      @for ($i = 1; $i <= 6; $i++)
+      @foreach ($orders as $order)
         <div class="table__row">
-          <div>#GN-20{{ $i }}</div>
-          <div class="muted">user{{ $i }}@mail.com</div>
-          <div><span class="status status--pending">Pending</span></div>
-          <div>৳ {{ number_format(799 + $i * 95) }}</div>
-          <div class="table__actions">
-            <button class="btn btn--ghost btn--small" type="button">Mark shipped</button>
-            <button class="btn btn--small" type="button">Mark delivered</button>
+          <div>#{{ $order->id }}</div>
+          <div>{{ $order->user->name }}<div class="muted small">{{ $order->user->email }}</div></div>
+          <div>
+            @foreach ($order->items as $item)
+              <div class="muted small">{{ $item->product->name }} x {{ $item->quantity }}</div>
+            @endforeach
+          </div>
+          <div>Tk {{ number_format((float) $order->total_price, 2) }}</div>
+          <div><span class="chip">{{ ucfirst($order->status) }}</span></div>
+          <div>
+            <form method="POST" action="{{ route('admin.orders.status', $order) }}">
+              @csrf
+              @method('PATCH')
+              <select class="input" name="status">
+                <option value="pending" @selected($order->status === 'pending')>Pending</option>
+                <option value="completed" @selected($order->status === 'completed')>Completed</option>
+              </select>
+              <button class="btn btn--small" type="submit" style="margin-top: 0.5rem;">Update</button>
+            </form>
           </div>
         </div>
-      @endfor
+      @endforeach
     </div>
   </section>
 @endsection
-

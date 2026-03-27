@@ -3,7 +3,6 @@
   'name' => 'Gift Item',
   'price' => 499,
   'image' => null,
-  'badge' => 'Popular',
   'category' => 'Gift',
 ])
 
@@ -14,7 +13,7 @@
 @endphp
 
 <article class="card product-card">
-  <a class="product-card__media" href="{{ route('product.show', ['id' => $id]) }}">
+  <a class="product-card__media" href="{{ route('product.show', ['product' => $id]) }}">
     <div class="product-card__frame">
       @if ($hasImage)
         <img src="{{ $imageUrl }}" alt="{{ $name }}" loading="lazy" />
@@ -24,34 +23,23 @@
         </div>
       @endif
     </div>
-    <span class="pill">{{ $badge }}</span>
+    <span class="pill">{{ $category }}</span>
   </a>
 
   <div class="product-card__body">
     <div class="product-card__meta">
       <span>{{ $category }}</span>
-      <span>Ready to ship</span>
+      <span>Database powered</span>
     </div>
     <h3 class="product-card__title">
-      <a href="{{ route('product.show', ['id' => $id]) }}">{{ $name }}</a>
+      <a href="{{ route('product.show', ['product' => $id]) }}">{{ $name }}</a>
     </h3>
     <div class="product-card__row">
       <div>
-        <div class="price">৳ {{ number_format($price) }}</div>
-        <div class="product-card__note">Framed to fit mixed image sizes</div>
+        <div class="price">Tk {{ number_format((float) $price, 2) }}</div>
+        <div class="product-card__note">Managed from the admin panel</div>
       </div>
-      <button
-        class="btn btn--small"
-        type="button"
-        data-add-to-cart
-        data-product-id="{{ $id }}"
-        data-product-name="{{ $name }}"
-        data-product-price="{{ $price }}"
-        data-product-image="{{ $imageUrl }}"
-        data-product-category="{{ $category }}"
-      >
-        Add
-      </button>
+      <a class="btn btn--small" href="{{ route('product.show', ['product' => $id]) }}">View</a>
     </div>
   </div>
 </article>
