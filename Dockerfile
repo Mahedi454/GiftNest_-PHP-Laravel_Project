@@ -7,10 +7,10 @@ RUN apt-get update \
         git \
         unzip \
         libzip-dev \
-        libsqlite3-dev \
+        default-mysql-client \
     && docker-php-ext-install \
         pdo \
-        pdo_sqlite \
+        pdo_mysql \
         zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
@@ -26,10 +26,9 @@ RUN composer install \
     --no-progress \
     --optimize-autoloader
 
-RUN mkdir -p database storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
-    && touch database/database.sqlite \
+RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
     && chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache database \
+    && chmod -R 775 storage bootstrap/cache \
     && cp .env.example .env \
     && printf '%s\n' \
        '<VirtualHost *:80>' \
@@ -51,13 +50,11 @@ RUN mkdir -p database storage/framework/cache storage/framework/sessions storage
 
 ENV APP_ENV=production \
     APP_DEBUG=false \
-    APP_URL=http://localhost \
+    APP_URL=https://giftnest.onrender.com \
     LOG_CHANNEL=stderr \
-    DB_CONNECTION=sqlite \
-    DB_DATABASE=/var/www/html/database/database.sqlite \
     SESSION_DRIVER=file \
-    CACHE_STORE=file \
-    QUEUE_CONNECTION=sync
+    CACHE_STORE=database \
+    QUEUE_CONNECTION=database
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
