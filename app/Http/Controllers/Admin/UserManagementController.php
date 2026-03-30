@@ -12,8 +12,13 @@ class UserManagementController extends Controller
 {
     public function index(): View
     {
-        return view('pages.admin.users', [
+        return view('admin.users.index', [
             'users' => User::query()->latest()->paginate(12),
+            'userStats' => [
+                'total' => User::query()->count(),
+                'admins' => User::query()->where('role', 'admin')->count(),
+                'customers' => User::query()->where('role', 'user')->count(),
+            ],
         ]);
     }
 
@@ -22,6 +27,10 @@ class UserManagementController extends Controller
         $data = $request->validate([
             'role' => ['required', 'in:admin,user'],
         ]);
+
+        if ($request->user()?->is($user) && $data['role'] !== 'admin') {
+            return back()->with('status', 'You cannot remove admin access from your own account.');
+        }
 
         $user->update($data);
 

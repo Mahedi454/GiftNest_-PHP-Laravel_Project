@@ -12,11 +12,16 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        return view('pages.admin.categories', [
+        return view('admin.categories.index', [
             'categories' => Category::query()
                 ->withCount('products')
                 ->orderBy('name')
                 ->get(),
+            'categoryStats' => [
+                'total' => Category::query()->count(),
+                'with_products' => Category::query()->has('products')->count(),
+                'empty' => Category::query()->doesntHave('products')->count(),
+            ],
         ]);
     }
 

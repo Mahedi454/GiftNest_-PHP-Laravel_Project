@@ -5,7 +5,8 @@
 @php
   $imagePath = $product->image ? public_path('images/products/' . $product->image) : null;
   $hasImage = $imagePath && file_exists($imagePath);
-  $imageUrl = $hasImage ? '/images/products/' . $product->image : '';
+  $imageVersion = $hasImage ? filemtime($imagePath) : null;
+  $imageUrl = $hasImage ? '/images/products/' . $product->image . '?v=' . $imageVersion : '';
 @endphp
 
 <article class="card product-card">

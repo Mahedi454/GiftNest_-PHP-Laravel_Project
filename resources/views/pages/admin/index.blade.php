@@ -32,37 +32,23 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="section__head">
-      <div>
-        <h2>Latest orders</h2>
-        <div class="muted">Recent customer activity from the orders table.</div>
-      </div>
-      <a class="link" href="{{ route('admin.orders') }}">View all orders</a>
-    </div>
-
-    <div class="card table">
-      <div class="table__row table__head">
-        <div>Order ID</div>
-        <div>Customer</div>
-        <div>Status</div>
-        <div>Total</div>
-      </div>
-      @forelse ($latestOrders as $order)
-        <div class="table__row">
-          <div>#{{ $order->id }}</div>
-          <div>{{ $order->user->name }}</div>
-          <div><span class="chip">{{ ucfirst($order->status) }}</span></div>
-          <div>Tk {{ number_format((float) $order->total_price, 2) }}</div>
-        </div>
-      @empty
-        <div class="table__row">
-          <div>No orders yet.</div>
-          <div>-</div>
-          <div>-</div>
-          <div>-</div>
-        </div>
-      @endforelse
+  <section class="section section--tight">
+    <div class="grid grid--3">
+      <article class="feature-panel card feature-panel--home">
+        <div class="feature-panel__icon">P</div>
+        <h3>Product control</h3>
+        <p>Manage catalog items, stock, visibility, and images from a cleaner admin product workflow.</p>
+      </article>
+      <article class="feature-panel card feature-panel--home">
+        <div class="feature-panel__icon">C</div>
+        <h3>Category structure</h3>
+        <p>Organize the storefront with dedicated categories so products stay easy to browse and maintain.</p>
+      </article>
+      <article class="feature-panel card feature-panel--home">
+        <div class="feature-panel__icon">U</div>
+        <h3>User roles</h3>
+        <p>Separate customers from administrators and control role changes safely from the users panel.</p>
+      </article>
     </div>
   </section>
 @endsection

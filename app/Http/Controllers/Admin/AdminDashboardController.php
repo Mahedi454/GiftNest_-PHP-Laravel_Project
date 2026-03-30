@@ -23,11 +23,6 @@ class AdminDashboardController extends Controller
                 'orders' => Order::query()->count(),
                 'revenue' => $totalRevenue,
             ],
-            'latestOrders' => Order::query()
-                ->with('user')
-                ->latest()
-                ->take(5)
-                ->get(),
         ]);
     }
 }

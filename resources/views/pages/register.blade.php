@@ -22,6 +22,17 @@
           <p class="muted">Enter your details to register.</p>
         </div>
 
+        @if ($errors->any())
+          <div class="auth__errors">
+            <strong>Please fix these fields:</strong>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
         <form class="auth__form" method="POST" action="{{ route('register') }}">
           @csrf
           <label class="field">
@@ -42,6 +53,7 @@
           <label class="field">
             <span class="field__label">Confirm password</span>
             <input class="input" type="password" name="password_confirmation" required autocomplete="new-password" />
+            @error('password_confirmation') <span class="muted">{{ $message }}</span> @enderror
           </label>
           <button class="btn btn--full" type="submit">Create account</button>
         </form>

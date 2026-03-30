@@ -1,6 +1,14 @@
 <header class="navbar">
   @php
     $cartCount = collect(session('cart', []))->sum('quantity');
+    $user = auth()->user();
+    $userInitials = $user
+      ? collect(explode(' ', trim($user->name)))
+          ->filter()
+          ->take(2)
+          ->map(fn ($part) => strtoupper(substr($part, 0, 1)))
+          ->implode('')
+      : '';
   @endphp
 
   <div class="container navbar__inner">
@@ -30,13 +38,27 @@
       @auth
         @if (auth()->user()->isAdmin())
           <a class="btn btn--ghost" href="{{ route('admin.index') }}">Admin</a>
-        @else
-          <a class="btn btn--ghost" href="{{ route('orders') }}">Orders</a>
         @endif
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button class="btn btn--ghost" type="submit">Logout</button>
-        </form>
+        <div class="profilemenu" data-profile-menu>
+          <button class="profilemenu__trigger" type="button" aria-label="Open profile menu" data-profile-menu-toggle>
+            <span class="profilemenu__avatar">{{ $userInitials }}</span>
+            <span class="profilemenu__meta">
+              <span class="profilemenu__name">{{ $user->name }}</span>
+              <span class="profilemenu__role">{{ $user->isAdmin() ? 'Administrator' : 'Customer' }}</span>
+            </span>
+          </button>
+
+          <div class="profilemenu__dropdown" data-profile-menu-panel hidden>
+            <a class="profilemenu__link" href="{{ route('profile.edit') }}">My profile</a>
+            @unless ($user->isAdmin())
+              <a class="profilemenu__link" href="{{ route('orders') }}">My orders</a>
+            @endunless
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button class="profilemenu__logout" type="submit">Logout</button>
+            </form>
+          </div>
+        </div>
       @else
         <a class="btn btn--ghost" href="{{ route('login') }}">Login</a>
         <a class="btn" href="{{ route('register') }}">Sign up</a>
@@ -62,6 +84,7 @@
           @else
             <a class="btn btn--ghost" href="{{ route('orders') }}">Orders</a>
           @endif
+          <a class="btn btn--ghost" href="{{ route('profile.edit') }}">Profile</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button class="btn btn--ghost" type="submit">Logout</button>

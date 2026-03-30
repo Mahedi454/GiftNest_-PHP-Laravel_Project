@@ -12,11 +12,17 @@ class OrderController extends Controller
 {
     public function index(): View
     {
-        return view('pages.admin.orders', [
+        return view('admin.orders.index', [
             'orders' => Order::query()
                 ->with(['user', 'items.product'])
                 ->latest()
                 ->paginate(12),
+            'orderStats' => [
+                'total' => Order::query()->count(),
+                'pending' => Order::query()->where('status', 'pending')->count(),
+                'completed' => Order::query()->where('status', 'completed')->count(),
+                'revenue' => Order::query()->where('status', 'completed')->sum('total_price'),
+            ],
         ]);
     }
 

@@ -9,7 +9,9 @@
         <div class="product__mediaFrame">
           @php
             $imagePath = $product->image ? public_path('images/products/' . $product->image) : null;
-            $imageUrl = $imagePath && file_exists($imagePath) ? '/images/products/' . $product->image : '';
+            $imageUrl = $imagePath && file_exists($imagePath)
+              ? '/images/products/' . $product->image . '?v=' . filemtime($imagePath)
+              : '';
           @endphp
 
           @if ($imageUrl)

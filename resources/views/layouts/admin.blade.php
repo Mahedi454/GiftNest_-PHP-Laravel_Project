@@ -29,7 +29,7 @@
           <a href="{{ route('admin.orders') }}">Orders</a>
           <a href="{{ route('admin.users') }}">Users</a>
         </nav>
-        <div style="display:flex; gap:0.75rem; align-items:center;">
+        <div class="admin-topbar__actions">
           <a class="btn btn--ghost" href="{{ route('home') }}">View site</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf

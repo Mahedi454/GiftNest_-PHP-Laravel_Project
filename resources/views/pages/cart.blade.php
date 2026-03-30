@@ -27,7 +27,9 @@
             <div class="cartrow__media">
               @php
                 $imagePath = $item['image'] ? public_path('images/products/' . $item['image']) : null;
-                $imageUrl = $imagePath && file_exists($imagePath) ? '/images/products/' . $item['image'] : '';
+                $imageUrl = $imagePath && file_exists($imagePath)
+                  ? '/images/products/' . $item['image'] . '?v=' . filemtime($imagePath)
+                  : '';
               @endphp
 
               @if ($imageUrl)

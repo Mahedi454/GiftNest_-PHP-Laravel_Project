@@ -66,7 +66,9 @@
             @foreach ($heroItems as $product)
               @php
                 $productImagePath = $product->image ? public_path('images/products/' . $product->image) : null;
-                $productImageUrl = $productImagePath && file_exists($productImagePath) ? '/images/products/' . $product->image : '';
+                $productImageUrl = $productImagePath && file_exists($productImagePath)
+                  ? '/images/products/' . $product->image . '?v=' . filemtime($productImagePath)
+                  : '';
               @endphp
 
               <article class="hero-mini card">
@@ -115,6 +117,35 @@
           </div>
         @endif
       </div>
+    </div>
+  </section>
+
+  <section class="section section--tight why-giftnest">
+    <div class="section__head">
+      <div>
+        <div class="kicker">Why GiftNest</div>
+        <h2>A simple gifting flow made for quick decisions</h2>
+      </div>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="feature-panel card feature-panel--home">
+        <div class="feature-panel__icon">01</div>
+        <h3>Browse curated picks</h3>
+        <p>Explore a focused collection of gifts for birthdays, campus moments, and everyday surprises without unnecessary clutter.</p>
+      </article>
+
+      <article class="feature-panel card feature-panel--home">
+        <div class="feature-panel__icon">02</div>
+        <h3>Add to cart in seconds</h3>
+        <p>Use the simple session-based cart to collect your favorites and adjust quantities quickly before checkout.</p>
+      </article>
+
+      <article class="feature-panel card feature-panel--home">
+        <div class="feature-panel__icon">03</div>
+        <h3>Place a smooth order</h3>
+        <p>Complete checkout with basic delivery details and finish the order flow with a clean, beginner-friendly experience.</p>
+      </article>
     </div>
   </section>
 
