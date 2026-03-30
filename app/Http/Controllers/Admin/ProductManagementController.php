@@ -13,7 +13,7 @@ class ProductManagementController extends Controller
 {
     public function index(): View
     {
-        return view('pages.admin.products', [
+        return view('admin.products.index', [
             'products' => Product::query()
                 ->with('category')
                 ->latest()
@@ -23,7 +23,7 @@ class ProductManagementController extends Controller
 
     public function create(): View
     {
-        return view('pages.admin.product-form', [
+        return view('admin.products.create', [
             'product' => new Product([
                 'is_active' => true,
                 'stock' => 0,
@@ -47,7 +47,7 @@ class ProductManagementController extends Controller
 
     public function edit(Product $product): View
     {
-        return view('pages.admin.product-form', [
+        return view('admin.products.edit', [
             'product' => $product,
             'categories' => Category::query()->orderBy('name')->get(),
             'formAction' => route('admin.products.update', $product),

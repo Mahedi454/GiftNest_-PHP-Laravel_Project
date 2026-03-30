@@ -14,14 +14,14 @@
         <div class="card__title">Quick actions</div>
         <div class="stack">
           <a class="btn btn--ghost" href="{{ route('orders') }}">View orders</a>
-          <a class="btn btn--ghost" href="{{ route('wishlist') }}">Wishlist</a>
+          <a class="btn btn--ghost" href="{{ route('cart') }}">Open cart</a>
           <a class="btn" href="{{ route('shop') }}">Continue shopping</a>
         </div>
       </div>
 
       <div class="card">
         <div class="card__title">Account</div>
-        <div class="muted">Keep your account details, delivery preferences, and gifting activity organized here.</div>
+        <div class="muted">Use this area to review your recent orders and move through the simple GiftNest shopping flow.</div>
       </div>
     </div>
   </section>

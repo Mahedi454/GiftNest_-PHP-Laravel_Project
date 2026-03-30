@@ -5,42 +5,48 @@
         <img class="brand__logo" src="/gift-svgrepo-com.svg" alt="GiftNest logo" />
         <div>
           <div class="footer__title">GiftNest</div>
-          <div class="footer__subtitle">Thoughtful gifts for students, friends, and local shoppers across Bangladesh.</div>
+          <div class="footer__subtitle">A simple and modern Laravel gift shop for your university showcase project.</div>
         </div>
       </div>
       <p class="footer__copy">
-        Designed for quick discovery, friendly checkout, and moments that still feel personal.
+        Built with reusable Blade components, a clean layout system, and a beginner-friendly storefront structure.
       </p>
       <div class="footer__meta">
-        <span class="chip">Cash on Delivery</span>
-        <span class="chip">bKash-ready</span>
-        <span class="chip">SSLCommerz-ready</span>
+        <span class="chip">Laravel MVC</span>
+        <span class="chip">Session Cart</span>
+        <span class="chip">Responsive UI</span>
       </div>
     </div>
 
     <div class="footer__right">
       <div class="footer__col">
-        <div class="footer__heading">Explore</div>
+        <div class="footer__heading">Store</div>
+        <a href="{{ route('home') }}">Home</a>
         <a href="{{ route('shop') }}">Shop</a>
-        <a href="{{ route('wishlist') }}">Wishlist</a>
-        <a href="{{ route('orders') }}">Orders</a>
-      </div>
-      <div class="footer__col">
-        <div class="footer__heading">Company</div>
-        <a href="{{ route('about') }}">About</a>
-        <a href="{{ route('contact') }}">Contact</a>
+        <a href="{{ route('cart') }}">Cart</a>
+        <a href="{{ route('checkout') }}">Checkout</a>
       </div>
       <div class="footer__col">
         <div class="footer__heading">Account</div>
-        <a href="{{ route('login') }}">Login</a>
-        <a href="{{ route('register') }}">Register</a>
-        <a href="{{ route('admin.index') }}">Admin</a>
+        @auth
+          <a href="{{ route('orders') }}">Orders</a>
+          @if (auth()->user()->isAdmin())
+            <a href="{{ route('admin.index') }}">Admin Panel</a>
+          @endif
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button class="footer__button" type="submit">Logout</button>
+          </form>
+        @else
+          <a href="{{ route('login') }}">Login</a>
+          <a href="{{ route('register') }}">Register</a>
+        @endauth
       </div>
     </div>
   </div>
 
   <div class="container footer__bottom">
     <span>&copy; {{ date('Y') }} GiftNest. All rights reserved.</span>
-    <span class="footer__small">Built for a smoother gifting experience.</span>
+    <span class="footer__small">Built with Laravel, Blade, and MySQL.</span>
   </div>
 </footer>

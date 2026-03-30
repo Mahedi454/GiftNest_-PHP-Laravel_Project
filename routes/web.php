@@ -5,30 +5,31 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductManagementController;
 use App\Http\Controllers\Admin\UserManagementController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 Route::get('/shop', [ProductController::class, 'index'])->name('shop');
-Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
-Route::view('/cart', 'pages.cart')->name('cart');
-Route::view('/checkout', 'pages.checkout')->name('checkout');
 Route::view('/about', 'pages.about')->name('about');
-Route::view('/contact', 'pages.contact')->name('contact');
-
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->name('register.store');
-});
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
+Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
-    Route::view('/orders', 'pages.orders')->name('orders');
-    Route::view('/wishlist', 'pages.wishlist')->name('wishlist');
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/success/{order}', [OrderController::class, 'success'])->name('checkout.success');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::prefix('admin')
@@ -55,3 +56,5 @@ Route::prefix('admin')
         Route::get('/users', [UserManagementController::class, 'index'])->name('users');
         Route::patch('/users/{user}/role', [UserManagementController::class, 'updateRole'])->name('users.role');
     });
+
+require __DIR__.'/auth.php';

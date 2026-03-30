@@ -2,67 +2,71 @@
 
 @section('title', 'GiftNest - Checkout')
 
+@php
+  $total = $subtotal + $shipping;
+@endphp
+
 @section('content')
   <section class="section section--tight">
     <div class="section__head">
-      <h1>Checkout</h1>
-      <div class="muted">Review your delivery details and choose the payment method that works best for you.</div>
+      <div>
+        <h1>Checkout</h1>
+        <div class="muted">Fill in your delivery information to place the order.</div>
+      </div>
+      @if (session('status'))
+        <div class="chip chip--strong">{{ session('status') }}</div>
+      @endif
     </div>
   </section>
 
   <section class="section">
     <div class="checkout">
-      <form class="card checkout__form">
+      <form class="card checkout__form" method="POST" action="{{ route('checkout.store') }}">
+        @csrf
         <div class="formgrid">
           <label class="field">
-            <span class="field__label">Full name</span>
-            <input class="input" type="text" placeholder="Your name" />
+            <span class="field__label">Name</span>
+            <input class="input" type="text" name="name" value="{{ old('name', auth()->user()->name) }}" required />
+            @error('name') <span class="muted">{{ $message }}</span> @enderror
           </label>
+
           <label class="field">
             <span class="field__label">Phone</span>
-            <input class="input" type="tel" placeholder="+880 1XXXXXXXXX" />
+            <input class="input" type="text" name="phone" value="{{ old('phone') }}" required />
+            @error('phone') <span class="muted">{{ $message }}</span> @enderror
           </label>
-          <label class="field">
-            <span class="field__label">Email</span>
-            <input class="input" type="email" placeholder="you@example.com" />
-          </label>
-          <label class="field">
-            <span class="field__label">City</span>
-            <input class="input" type="text" placeholder="Dhaka" />
-          </label>
+
           <label class="field field--full">
             <span class="field__label">Address</span>
-            <input class="input" type="text" placeholder="Street, area, apartment, landmark" />
+            <textarea class="input" name="address" rows="5" required>{{ old('address') }}</textarea>
+            @error('address') <span class="muted">{{ $message }}</span> @enderror
           </label>
         </div>
 
-        <div class="checkout__payment">
-          <div class="checkout__paymentTitle">Payment</div>
-          <div class="segmented">
-            <button class="segmented__btn is-active" type="button">Cash on Delivery</button>
-            <button class="segmented__btn" type="button">bKash</button>
-            <button class="segmented__btn" type="button">SSLCommerz</button>
-          </div>
-          <div class="muted small">Choose your preferred payment option before placing the order.</div>
-        </div>
-
-        <button class="btn btn--full" type="button">Place order</button>
+        <button class="btn btn--full" type="submit">Place order</button>
       </form>
 
       <aside class="card checkout__summary">
-        <div class="cart__summaryTitle">Summary</div>
+        <div class="cart__summaryTitle">Order summary</div>
+        @foreach ($cartItems as $item)
+          <div class="cart__summaryRow">
+            <span class="muted">{{ $item['name'] }} x{{ $item['quantity'] }}</span>
+            <span>Tk {{ number_format((float) ($item['price'] * $item['quantity']), 2) }}</span>
+          </div>
+        @endforeach
+        <div class="divider"></div>
         <div class="cart__summaryRow">
           <span class="muted">Subtotal</span>
-          <span data-cart-subtotal>৳ 0</span>
+          <span>Tk {{ number_format((float) $subtotal, 2) }}</span>
         </div>
         <div class="cart__summaryRow">
           <span class="muted">Shipping</span>
-          <span data-cart-shipping>৳ 0</span>
+          <span>Tk {{ number_format((float) $shipping, 2) }}</span>
         </div>
         <div class="divider"></div>
         <div class="cart__summaryRow cart__summaryRow--total">
           <span>Total</span>
-          <span data-cart-total>৳ 0</span>
+          <span>Tk {{ number_format((float) $total, 2) }}</span>
         </div>
       </aside>
     </div>

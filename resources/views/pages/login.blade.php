@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'GiftNest - Admin Login')
+@section('title', 'GiftNest - Login')
 
 @section('content')
   <section class="section auth">
@@ -8,11 +8,11 @@
       <div class="auth__intro">
         <div class="kicker">Authentication</div>
         <h1>Login to GiftNest</h1>
-        <p class="lead">Admins are redirected to the dashboard after login. Customers go to their account area.</p>
+        <p class="lead">Use the standard GiftNest sign-in flow to access your orders or admin panel.</p>
         <div class="auth__highlights">
-          <span class="chip">Role-based access</span>
-          <span class="chip">Protected admin routes</span>
+          <span class="chip">Laravel Breeze</span>
           <span class="chip">Session authentication</span>
+          <span class="chip">Role-based redirect</span>
         </div>
       </div>
 
@@ -22,22 +22,29 @@
           <p class="muted">Use your account email and password.</p>
         </div>
 
-        <form class="auth__form" method="POST" action="{{ route('login.store') }}">
+        @if (session('status'))
+          <p class="muted">{{ session('status') }}</p>
+        @endif
+
+        <form class="auth__form" method="POST" action="{{ route('login') }}">
           @csrf
           <label class="field">
             <span class="field__label">Email</span>
-            <input class="input" type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required />
+            <input class="input" type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required autofocus autocomplete="username" />
             @error('email') <span class="muted">{{ $message }}</span> @enderror
           </label>
           <label class="field">
             <span class="field__label">Password</span>
-            <input class="input" type="password" name="password" placeholder="Enter your password" required />
+            <input class="input" type="password" name="password" placeholder="Enter your password" required autocomplete="current-password" />
             @error('password') <span class="muted">{{ $message }}</span> @enderror
           </label>
           <label class="field field--inline">
-            <input type="checkbox" name="remember" value="1" />
+            <input type="checkbox" name="remember" value="1" @checked(old('remember')) />
             <span class="field__label">Remember me</span>
           </label>
+          @if (Route::has('password.request'))
+            <a class="link" href="{{ route('password.request') }}">Forgot your password?</a>
+          @endif
           <button class="btn btn--full" type="submit">Login</button>
         </form>
 

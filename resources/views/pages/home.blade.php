@@ -3,59 +3,117 @@
 @section('title', 'GiftNest - Thoughtful Gifts for Every Occasion')
 
 @section('content')
-  <section class="hero">
-    <div class="hero__grid">
-      <div class="hero__copy">
-        <div class="hero__eyebrow">
+  @php
+    $heroItems = $heroProducts->take(3)->values();
+    $spotlightCount = $heroItems->count() ?: max(1, $featuredProducts->count());
+  @endphp
+
+  <section class="hero hero--showcase">
+    <div class="hero-showcase">
+      <div class="hero-showcase__content">
+        <div class="hero-showcase__eyebrow">
           <span class="kicker">Modern gifting for Bangladesh</span>
-          <span class="chip chip--strong">Same-day friendly</span>
+          <span class="chip">Same-day friendly</span>
         </div>
+
         <h1>Find the right gift with ease.</h1>
-        <p class="lead">
+
+        <p class="lead hero-showcase__lead">
           Discover curated picks for birthdays, campus surprises, and everyday celebrations with a smoother shopping experience from first click to checkout.
         </p>
-        <div class="hero__cta">
+
+        <div class="hero-showcase__actions">
           <a class="btn" href="{{ route('shop') }}">Shop now</a>
           <a class="btn btn--ghost" href="{{ route('about') }}">Learn more</a>
         </div>
-        <div class="hero__stats">
-          <div class="stat">
-            <div class="stat__value">{{ count($featuredProducts) + count($heroProducts) }}+</div>
-            <div class="stat__label">Featured gift picks</div>
+
+        <div class="hero-showcase__stats">
+          <div class="hero-showcase__stat card">
+            <div class="hero-showcase__statValue">{{ count($featuredProducts) + count($heroProducts) }}+</div>
+            <div class="hero-showcase__statLabel">Featured gift picks</div>
           </div>
-          <div class="stat">
-            <div class="stat__value">{{ $categoryCount }}</div>
-            <div class="stat__label">Gift categories</div>
+          <div class="hero-showcase__stat card">
+            <div class="hero-showcase__statValue">{{ $categoryCount }}</div>
+            <div class="hero-showcase__statLabel">Gift categories</div>
           </div>
-          <div class="stat">
-            <div class="stat__value">24h</div>
-            <div class="stat__label">Fast local dispatch</div>
+          <div class="hero-showcase__stat card">
+            <div class="hero-showcase__statValue">24h</div>
+            <div class="hero-showcase__statLabel">Fast local dispatch</div>
           </div>
         </div>
       </div>
 
-      <div class="hero__showcase">
-        <div class="card hero-card">
-          <div class="hero-card__top">
-            <div>
-              <div class="hero-card__title">Today's Picks</div>
-              <div class="hero-card__subtitle">Selected from your live product catalog</div>
-            </div>
-            <span class="chip chip--strong">Trending</span>
+      <div class="hero-showcase__panel card">
+        <div class="hero-showcase__panelHead">
+          <div class="hero-showcase__panelTitle">
+            <span class="hero-showcase__panelKicker">Curated now</span>
+            <h2>Today's Picks</h2>
+            <p>Selected from your new gift catalog</p>
           </div>
-          <div class="hero-card__feature">
-            <div>
-              <div class="hero-card__featureLabel">This week</div>
-              <div class="hero-card__featureValue">Products are now managed from the admin dashboard and loaded from MySQL.</div>
-            </div>
-            <a class="link" href="{{ route('shop') }}">Explore collection</a>
+          <span class="chip">Trending</span>
+        </div>
+
+        <div class="hero-showcase__promo">
+          <div>
+            <div class="hero-showcase__promoLabel">This week</div>
+            <p>Flowers, jewelry, chocolates, and curated hampers</p>
           </div>
-          <div class="grid grid--3">
-            @foreach ($heroProducts as $product)
-              @include('components.product-card', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'image' => $product->image, 'category' => $product->category->name])
+          <a class="hero-showcase__promoLink" href="{{ route('shop') }}">Explore collection</a>
+        </div>
+
+        @if ($heroItems->isNotEmpty())
+          <div class="hero-showcase__products">
+            @foreach ($heroItems as $product)
+              @php
+                $productImagePath = $product->image ? public_path('images/products/' . $product->image) : null;
+                $productImageUrl = $productImagePath && file_exists($productImagePath) ? '/images/products/' . $product->image : '';
+              @endphp
+
+              <article class="hero-mini card">
+                <a class="hero-mini__media" href="{{ route('product.show', $product) }}">
+                  @if ($productImageUrl)
+                    <img src="{{ $productImageUrl }}" alt="{{ $product->name }}" class="hero-mini__image" />
+                  @else
+                    <div class="hero-mini__placeholder">{{ $product->name }}</div>
+                  @endif
+                  <span class="hero-mini__tag">
+                    {{ ['Best Seller', 'Elegant', 'Romantic'][$loop->index] ?? 'Gift Pick' }}
+                  </span>
+                </a>
+
+                <div class="hero-mini__body">
+                  <div class="hero-mini__meta">
+                    <span>{{ ['Flowers', 'Jewelry', 'Flowers'][$loop->index] ?? 'Gift' }}</span>
+                    <span>Ready to ship</span>
+                  </div>
+
+                  <h3 class="hero-mini__title">
+                    <a href="{{ route('product.show', $product) }}">{{ $product->name }}</a>
+                  </h3>
+
+                  <div class="hero-mini__price">Tk {{ number_format((float) $product->price, 0) }}</div>
+                  <p class="hero-mini__text">
+                    {{ \Illuminate\Support\Str::limit($product->description, 52) }}
+                  </p>
+
+                  <div class="hero-mini__actions">
+                    <form method="POST" action="{{ route('cart.store', $product) }}">
+                      @csrf
+                      <button class="btn" type="submit">Add</button>
+                    </form>
+                  </div>
+                </div>
+              </article>
             @endforeach
           </div>
-        </div>
+        @else
+          <div class="hero-showcase__empty">
+            <div class="empty">
+              <div class="empty__title">No picks yet</div>
+              <div class="empty__subtitle">Add a few products to the catalog to populate this section.</div>
+            </div>
+          </div>
+        @endif
       </div>
     </div>
   </section>
@@ -70,7 +128,7 @@
     </div>
     <div class="grid grid--4">
       @foreach ($featuredProducts as $product)
-        @include('components.product-card', ['id' => $product->id, 'name' => $product->name, 'price' => $product->price, 'image' => $product->image, 'category' => $product->category->name])
+        <x-product-card :product="$product" />
       @endforeach
     </div>
   </section>

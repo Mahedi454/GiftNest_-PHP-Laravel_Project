@@ -41,10 +41,16 @@ class OrderSeeder extends Seeder
             $order = Order::updateOrCreate(
                 [
                     'user_id' => $user->id,
+                    'customer_name' => $user->name,
+                    'phone' => '01700000000',
+                    'address' => 'GiftNest Demo Address, Dhaka',
                     'status' => $orderData['status'],
                     'total_price' => $total,
                 ],
                 [
+                    'customer_name' => $user->name,
+                    'phone' => '01700000000',
+                    'address' => 'GiftNest Demo Address, Dhaka',
                     'total_price' => $total,
                 ],
             );
