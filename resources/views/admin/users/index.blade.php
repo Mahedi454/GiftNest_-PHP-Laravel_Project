@@ -53,7 +53,7 @@
             </span>
           </div>
           <div>{{ $user->created_at->format('d M Y') }}</div>
-          <div>
+          <div class="table__actions table__actions--users">
             <form class="admin-inline-form admin-inline-form--role" method="POST" action="{{ route('admin.users.role', $user) }}">
               @csrf
               @method('PATCH')
@@ -74,7 +74,23 @@
     </div>
 
     <div class="pagination">
-      {{ $users->links() }}
+      @if ($users->onFirstPage())
+        <span class="pagination__link pagination__link--disabled">Prev</span>
+      @else
+        <a class="pagination__link" href="{{ $users->previousPageUrl() }}">Prev</a>
+      @endif
+
+      @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+        <a class="pagination__link {{ $page === $users->currentPage() ? 'pagination__link--active' : '' }}" href="{{ $url }}">
+          {{ $page }}
+        </a>
+      @endforeach
+
+      @if ($users->hasMorePages())
+        <a class="pagination__link" href="{{ $users->nextPageUrl() }}">Next</a>
+      @else
+        <span class="pagination__link pagination__link--disabled">Next</span>
+      @endif
     </div>
   </section>
 @endsection

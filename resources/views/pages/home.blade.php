@@ -56,7 +56,7 @@
         <div class="hero-showcase__promo">
           <div>
             <div class="hero-showcase__promoLabel">This week</div>
-            <p>Flowers, jewelry, chocolates, and curated hampers</p>
+            <p>Ready-to-ship gifts selected from the latest collection</p>
           </div>
           <a class="hero-showcase__promoLink" href="{{ route('shop') }}">Explore collection</a>
         </div>
@@ -85,7 +85,6 @@
 
                 <div class="hero-mini__body">
                   <div class="hero-mini__meta">
-                    <span>{{ ['Flowers', 'Jewelry', 'Flowers'][$loop->index] ?? 'Gift' }}</span>
                     <span>Ready to ship</span>
                   </div>
 

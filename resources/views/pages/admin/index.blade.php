@@ -9,7 +9,7 @@
         <div class="kicker">Admin dashboard</div>
         <h1>Business overview</h1>
       </div>
-      <div class="muted">Live totals are pulled from your MySQL-backed tables.</div>
+      <div class="muted">Live totals are pulled from your PostgreSQL-backed tables.</div>
     </div>
 
     <div class="grid grid--4">

@@ -74,7 +74,7 @@
           </div>
           <div class="table__actions">
             <a class="btn btn--ghost btn--small" href="{{ route('admin.products.edit', $product) }}">Edit</a>
-            <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
+            <form class="table__actionForm" method="POST" action="{{ route('admin.products.destroy', $product) }}">
               @csrf
               @method('DELETE')
               <button class="btn btn--danger btn--small" type="submit">Delete</button>
@@ -90,7 +90,23 @@
     </div>
 
     <div class="pagination">
-      {{ $products->links() }}
+      @if ($products->onFirstPage())
+        <span class="pagination__link pagination__link--disabled">Prev</span>
+      @else
+        <a class="pagination__link" href="{{ $products->previousPageUrl() }}">Prev</a>
+      @endif
+
+      @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+        <a class="pagination__link {{ $page === $products->currentPage() ? 'pagination__link--active' : '' }}" href="{{ $url }}">
+          {{ $page }}
+        </a>
+      @endforeach
+
+      @if ($products->hasMorePages())
+        <a class="pagination__link" href="{{ $products->nextPageUrl() }}">Next</a>
+      @else
+        <span class="pagination__link pagination__link--disabled">Next</span>
+      @endif
     </div>
   </section>
 @endsection

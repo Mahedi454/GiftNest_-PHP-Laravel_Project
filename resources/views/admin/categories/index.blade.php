@@ -32,7 +32,7 @@
   </section>
 
   <section class="section section--tight">
-    <div class="grid grid--2">
+    <div class="admin-categories-layout">
       <div class="card admin-category-card">
         <h2>Add category</h2>
         <p class="muted">Create a category and use it immediately in product forms.</p>
@@ -67,7 +67,7 @@
                 <input class="input" type="text" name="name" value="{{ $category->name }}" />
                 <button class="btn btn--ghost admin-inline-form__button" type="submit">Update</button>
               </form>
-              <form method="POST" action="{{ route('admin.categories.destroy', $category) }}">
+              <form class="table__actionForm" method="POST" action="{{ route('admin.categories.destroy', $category) }}">
                 @csrf
                 @method('DELETE')
                 <button class="btn btn--danger btn--small" type="submit">Delete</button>
@@ -81,6 +81,26 @@
           </div>
         @endforelse
       </div>
+    </div>
+
+    <div class="pagination">
+      @if ($categories->onFirstPage())
+        <span class="pagination__link pagination__link--disabled">Prev</span>
+      @else
+        <a class="pagination__link" href="{{ $categories->previousPageUrl() }}">Prev</a>
+      @endif
+
+      @foreach ($categories->getUrlRange(1, $categories->lastPage()) as $page => $url)
+        <a class="pagination__link {{ $page === $categories->currentPage() ? 'pagination__link--active' : '' }}" href="{{ $url }}">
+          {{ $page }}
+        </a>
+      @endforeach
+
+      @if ($categories->hasMorePages())
+        <a class="pagination__link" href="{{ $categories->nextPageUrl() }}">Next</a>
+      @else
+        <span class="pagination__link pagination__link--disabled">Next</span>
+      @endif
     </div>
   </section>
 @endsection

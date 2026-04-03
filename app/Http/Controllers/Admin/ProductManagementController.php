@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -65,7 +66,7 @@ class ProductManagementController extends Controller
 
     public function update(Request $request, Product $product): RedirectResponse
     {
-        $product->update($this->validatedData($request));
+        $product->update($this->validatedData($request, $product));
 
         return redirect()
             ->route('admin.products')
@@ -81,7 +82,7 @@ class ProductManagementController extends Controller
             ->with('status', 'Product deleted successfully.');
     }
 
-    private function validatedData(Request $request): array
+    private function validatedData(Request $request, ?Product $product = null): array
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -89,12 +90,15 @@ class ProductManagementController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'string', 'max:255'],
             'image_upload' => ['nullable', 'image', 'max:4096'],
+            'remove_image' => ['nullable', 'boolean'],
             'description' => ['required', 'string'],
             'stock' => ['required', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
         $data['is_active'] = $request->boolean('is_active');
+        $removeImage = $request->boolean('remove_image');
+        $existingImage = $product?->image;
 
         if ($request->hasFile('image_upload')) {
             $image = $request->file('image_upload');
@@ -102,11 +106,30 @@ class ProductManagementController extends Controller
             $filename = $filename.'-'.time().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('images/products'), $filename);
             $data['image'] = $filename;
+
+            if ($existingImage && $existingImage !== $filename) {
+                $this->deleteImageFile($existingImage);
+            }
+        } elseif ($removeImage || blank($data['image'])) {
+            if ($existingImage) {
+                $this->deleteImageFile($existingImage);
+            }
+
+            $data['image'] = null;
         }
 
-        unset($data['image_upload']);
+        unset($data['image_upload'], $data['remove_image']);
 
         return $data;
+    }
+
+    private function deleteImageFile(string $filename): void
+    {
+        $imagePath = public_path('images/products/'.$filename);
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
     }
 }
 

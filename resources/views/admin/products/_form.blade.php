@@ -53,6 +53,13 @@
         </label>
       </div>
 
+      @if ($product->exists && $currentImage)
+        <label class="field field--inline admin-product-form__toggle">
+          <input type="checkbox" name="remove_image" value="1" />
+          <span class="field__label">Remove current image from product and storage</span>
+        </label>
+      @endif
+
       <label class="field admin-product-form__full">
         <span class="field__label">Description</span>
         <textarea class="input" name="description" rows="5" required data-preview-description>{{ old('description', $product->description) }}</textarea>

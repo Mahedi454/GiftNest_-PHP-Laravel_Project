@@ -47,6 +47,6 @@
 
   <div class="container footer__bottom">
     <span>&copy; {{ date('Y') }} GiftNest. All rights reserved.</span>
-    <span class="footer__small">Built with Laravel, Blade, and MySQL.</span>
+    <span class="footer__small">Built with Laravel, Blade, and PostgreSQL.</span>
   </div>
 </footer>

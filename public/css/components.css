@@ -796,6 +796,15 @@
 .table__head{font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted);}
 .table__row:not(.table__head):hover{background:rgba(58,139,149,.06);}
 .table__actions{display:flex; gap:10px; justify-content:flex-end;}
+.table__actions--users{
+  justify-content:flex-start;
+}
+.table__actionForm{
+  margin:0;
+}
+.table__actionForm .btn{
+  width:100%;
+}
 
 .status{
   display:inline-flex;
@@ -952,15 +961,26 @@
   align-items:center;
 }
 .table__row--categories{
-  grid-template-columns:minmax(160px, 1.4fr) 110px minmax(260px, 1fr);
-  align-items:center;
+  grid-template-columns:minmax(160px, 1.1fr) 90px minmax(320px, 1.5fr);
+  align-items:start;
 }
 .table__row--users{
-  grid-template-columns:minmax(140px, 1fr) minmax(200px, 1.2fr) 140px 110px minmax(210px, 1fr);
+  grid-template-columns:minmax(140px, .9fr) minmax(180px, 1.1fr) 130px 110px minmax(240px, 1.1fr);
+  align-items:center;
+}
+.table__head.table__row--categories,
+.table__head.table__row--users,
+.table__head.table__row--products{
   align-items:center;
 }
 .admin-category-card{
   padding:24px;
+}
+.admin-categories-layout{
+  display:grid;
+  grid-template-columns:minmax(260px, 30%) minmax(0, 70%);
+  gap:20px;
+  align-items:start;
 }
 .admin-category-form{
   display:flex;
@@ -970,19 +990,37 @@
 }
 .admin-inline-form{
   display:flex;
-  align-items:flex-end;
+  align-items:center;
   gap:12px;
+  flex-wrap:wrap;
+  min-width:0;
 }
 .admin-inline-form .input{
-  min-width:150px;
+  min-width:0;
 }
 .admin-inline-form__button{
   min-width:136px;
   padding-inline:18px;
 }
+.admin-inline-form--role{
+  display:grid;
+  grid-template-columns:minmax(110px, 1fr) auto;
+  align-items:center;
+  width:100%;
+}
 .table__actions--category{
   justify-content:flex-start;
+  align-items:center;
   flex-wrap:wrap;
+}
+.table__actions--category .admin-inline-form{
+  flex:1 1 240px;
+}
+.table__actions--category .table__actionForm{
+  flex:none;
+}
+.table__actions--users .admin-inline-form--role{
+  max-width:100%;
 }
 .admin-order-list{
   display:flex;

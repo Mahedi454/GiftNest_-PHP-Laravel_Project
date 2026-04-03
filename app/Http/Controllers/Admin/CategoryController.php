@@ -16,7 +16,7 @@ class CategoryController extends Controller
             'categories' => Category::query()
                 ->withCount('products')
                 ->orderBy('name')
-                ->get(),
+                ->paginate(8),
             'categoryStats' => [
                 'total' => Category::query()->count(),
                 'with_products' => Category::query()->has('products')->count(),
