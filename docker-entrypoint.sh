@@ -21,7 +21,7 @@ php artisan view:clear >/dev/null 2>&1 || true
 php artisan cache:clear >/dev/null 2>&1 || true
 
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
-  php artisan migrate --force --seed
+  php artisan migrate --force
 fi
 
 exec "$@"

@@ -1,11 +1,8 @@
 services:
   - type: web
     name: giftnest
-    runtime: php
+    runtime: docker
     plan: free
-    buildCommand: composer install --no-dev --optimize-autoloader
-    preDeployCommand: php artisan migrate --force
-    startCommand: php -S 0.0.0.0:$PORT -t public
     healthCheckPath: /
     envVars:
       - key: APP_ENV
@@ -30,6 +27,8 @@ services:
         value: file
       - key: SESSION_LIFETIME
         value: "120"
+      - key: RUN_MIGRATIONS
+        value: "true"
 
 databases:
   - name: giftnest-db
