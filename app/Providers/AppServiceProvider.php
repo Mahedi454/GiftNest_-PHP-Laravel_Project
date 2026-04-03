@@ -22,6 +22,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
+        if (! extension_loaded('pdo_pgsql') && config('database.default') === 'pgsql') {
+            return;
+        }
+
         if (! Schema::hasTable('users')) {
             return;
         }
